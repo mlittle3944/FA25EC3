@@ -116,11 +116,35 @@ int main() {
 
     // TODO: Students, create the root from rawNodes[0]
     // adventureTree.createRoot(rawNodes[0].id, rawNodes[0].text);
+       adventureTree.createRoot(rawNodes[0].id, rawNodes[0].text);
+
 
     // TODO: Students, add all remaining nodes
     // for (int i = 1; i < rawNodes.size(); i++) {
     //     adventureTree.addNode(...);
     // }
+
+    for (size_t i = 0; i < rawNodes.size(); i++) {
+        for (const string &childID : rawNodes[i].children) {
+
+            // Find the child node's text
+            string childText = "";
+            for (auto &n : rawNodes) {
+                if (n.id == childID) {
+                    childText = n.text;
+                    break;
+                }
+            }
+
+            if (childText.empty()) {
+                cerr << "Child node " << childID << " not found in raw data!" << endl;
+                continue;
+            }
+
+            adventureTree.addNode(rawNodes[i].id, childID, childText);
+        }
+    }
+
 
     // TODO: Students, implement a method in Tree<T> called playGame()
     // This method should:
@@ -138,6 +162,6 @@ int main() {
     cout << "Implement the Tree class to enable traversal and printing." << endl;
 
     // TODO: Once implemented, uncomment to allow full gameplay.
-    // adventureTree.playGame();
+     adventureTree.playGame();
     return 0;
 }
